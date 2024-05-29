@@ -31,5 +31,11 @@ jobs:
       run: mvn -B package --file pom.xml
 
     - name: Run tests
-      run: mvn test
+      run: mvn -B test --file pom.xml -Dsurefire.useFile=false -X
 
+    - name: Archive test reports
+      if: failure()
+      uses: actions/upload-artifact@v3
+      with:
+        name: test-reports
+        path: target/surefire-reports/
