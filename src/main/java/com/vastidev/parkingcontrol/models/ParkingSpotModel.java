@@ -1,6 +1,7 @@
 package com.vastidev.parkingcontrol.models;
 
 import com.vastidev.parkingcontrol.dtos.ParkingSpotDto;
+import com.vastidev.parkingcontrol.dtos.UpdatedParkingSpotDto;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -41,7 +42,7 @@ public class ParkingSpotModel implements Serializable {
     private LocalDateTime registrationDate;
 
     public ParkingSpotModel(ParkingSpotDto parkingSpotDto) {
-        this.parkingSpotNumber= parkingSpotDto.getParkingSpotNumber();
+        this.parkingSpotNumber = parkingSpotDto.getParkingSpotNumber();
         this.licensePlateCar = parkingSpotDto.getLicensePlateCar();
         this.brandCar = parkingSpotDto.getBrandCar();
         this.modelCar = parkingSpotDto.getModelCar();
@@ -51,5 +52,16 @@ public class ParkingSpotModel implements Serializable {
         this.block = parkingSpotDto.getBlock();
         this.registrationDate = LocalDateTime.now();
 
+    }
+
+    public ParkingSpotModel(UpdatedParkingSpotDto updatedParkingSpotDto) {
+        this.parkingSpotNumber = updatedParkingSpotDto.getParkingSpotNumber();
+        this.licensePlateCar = updatedParkingSpotDto.getLicensePlateCar();
+        this.brandCar = updatedParkingSpotDto.getBrandCar();
+        this.modelCar = updatedParkingSpotDto.getModelCar();
+        this.responsibleName = updatedParkingSpotDto.getResponsibleName();
+        this.apartment = updatedParkingSpotDto.getApartment();
+        this.block = updatedParkingSpotDto.getBlock();
+        this.registrationDate = LocalDateTime.now();
     }
 }
