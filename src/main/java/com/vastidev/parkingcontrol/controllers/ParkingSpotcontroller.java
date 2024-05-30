@@ -8,13 +8,11 @@ import jakarta.validation.Valid;
 import org.springframework.beans.BeanUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.time.ZoneId;
+import java.util.List;
 
 @RestController
 @RequestMapping("/parking-spot")
@@ -46,17 +44,23 @@ public class ParkingSpotcontroller {
 //        return ResponseEntity.ok().body(newParkingSpotModel);
 //    }
 
-        private String validateParkingSpot(ParkingSpotDto parkingSpotDto){
-            if(parkingSpotService.existsByLicensePlateCar(parkingSpotDto.getLicensePlateCar())){
-                return"Conflict: License Plate Car is already in use!";
-            }
-            if(parkingSpotService.existsByParkingSpotNumber(parkingSpotDto.getParkingSpotNumber())){
-                return "Conflict: Parking Spot is already in use!";
-            }
-            if(parkingSpotService.existsByApartmentAndBlock(parkingSpotDto.getApartment(), parkingSpotDto.getBlock())) {
-                return "Conflict: Parking Spot already registered for this apartment and block";
-            }
-            return null;
+    @GetMapping
+    public ResponseEntity<List<ParkingSpotModel>> getAllParkingSpots(){
+        return ResponseEntity.status(HttpStatus.OK).body(parkingSpotService.findAll());
+    }
 
+
+    private String validateParkingSpot(ParkingSpotDto parkingSpotDto){
+        if(parkingSpotService.existsByLicensePlateCar(parkingSpotDto.getLicensePlateCar())){
+            return"Conflict: License Plate Car is already in use!";
         }
+        if(parkingSpotService.existsByParkingSpotNumber(parkingSpotDto.getParkingSpotNumber())){
+            return "Conflict: Parking Spot is already in use!";
+        }
+        if(parkingSpotService.existsByApartmentAndBlock(parkingSpotDto.getApartment(), parkingSpotDto.getBlock())) {
+            return "Conflict: Parking Spot already registered for this apartment and block";
+        }
+        return null;
+
+    }
 }
