@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
+import java.util.Optional;
+import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
@@ -36,6 +38,11 @@ public class ParkingSpotService {
     public List<ParkingSpotModel> findAll() {
         return parkingSpotRepository.findAll();
     }
+
+    public Optional<ParkingSpotModel> findById(UUID id) {
+        return parkingSpotRepository.findById(id);
+    }
+
 
 //    public ParkingSpotModel insert(ParkingSpotDto parkingSpotDto) {
 //        ParkingSpotModel newparkingSpotModel = new ParkingSpotModel(parkingSpotDto);
